@@ -1,0 +1,974 @@
+{
+  "meta": {
+    "title": "Play Google Scraper — Extract Google Maps leads at scale",
+    "description": "Multi-tenant SaaS platform with a Chrome extension for Google Maps lead extraction: a Quadtree grid that breaks the 120-result ceiling, the 'no website' filter, humanized scraping and a WhatsApp Kanban."
+  },
+  "common": {
+    "brand": "Play Google Scraper",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "close": "Close",
+    "copy": "Copy"
+  },
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How it works",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "start": "Start for free",
+    "language": "Language",
+    "theme": "Theme",
+    "login": "Sign in",
+    "panel": "Open panel",
+    "blog": "Blog",
+    "glossary": "Glossary",
+    "about": "About"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Choose theme"
+  },
+  "language": {
+    "label": "Language",
+    "ptBR": "Português (BR)",
+    "enUS": "English (US)",
+    "esES": "Español (ES)"
+  },
+  "hero": {
+    "badge": "Chrome extension + multi-tenant SaaS platform",
+    "titleTop": "Turn Google Maps",
+    "titleHighlight": "into a lead machine",
+    "subtitle": "Google hides most results behind a ~120-per-search ceiling. Our Quadtree grid splits the city into cells, scrapes every one and returns thousands of businesses — with the “no website” filter that points straight at who needs what you sell.",
+    "ctaPrimary": "Start for free",
+    "ctaSecondary": "See how it works",
+    "trust": "No credit card required · your tenant data stays isolated",
+    "stats": {
+      "perHour": {
+        "value": "4,000",
+        "label": "leads/hour in Turbo mode"
+      },
+      "limit": {
+        "value": "120 → 4,000+",
+        "label": "results per search with Quadtree"
+      },
+      "modes": {
+        "value": "4",
+        "label": "humanized speed modes"
+      }
+    }
+  },
+  "demo": {
+    "title": "Extension running",
+    "live": "LIVE",
+    "search": "barbershops — Goiânia, BR",
+    "mode": "Moderate",
+    "cells": "Cells",
+    "leads": "Leads",
+    "eta": "ETA",
+    "noSite": "No website",
+    "hot": "Hot",
+    "warm": "Warm",
+    "cold": "Cold",
+    "strategy": "Strategy",
+    "strategyPayload": "payload",
+    "strategyDom": "dom",
+    "strategyDetail": "detail",
+    "blocked": "0 blocks",
+    "footer": "Demonstrative animation of the extension panel — not real data."
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "title": "Manual prospecting doesn't scale. And generic scrapers stop at 120.",
+    "subtitle": "If you've ever hunted for clients on Google Maps, these pains ring true:",
+    "pains": [
+      {
+        "title": "The invisible 120 ceiling",
+        "text": "You scroll to the very end and Maps stops delivering. A capital city has thousands of barbershops, clinics and restaurants — the search returns a handful."
+      },
+      {
+        "title": "Lists with no priority",
+        "text": "A thousand CSV rows full of businesses that already have websites, wrong phones and zero filtering. Your team wastes hours figuring out who is worth contacting."
+      },
+      {
+        "title": "Blocks at the worst time",
+        "text": "Tool too aggressive, CAPTCHA shows up, the workday stops. Without resumability, everything that was meant to be collected is lost."
+      }
+    ],
+    "solutionTitle": "The solution: recursive grid + classification + humanization",
+    "solutionText": "Play Google Scraper splits the map into ~3 km cells (Quadtree). A full cell — 100+ results — is split into 4, recursively, until the region is exhausted, with global dedup by place_id and CID. On the server, every lead gets a 0–100 heat_score, and the “no website” filter lifts whoever has no real presence of their own: the perfect lead for anyone selling websites.",
+    "solutionBullets": [
+      "Recursive Quadtree: from ~120 to thousands of leads per city",
+      "Global dedup by place_id and CID — zero duplicates",
+      "Server-side, auditable heat_score 0–100",
+      "Saved filter “Hot + rating ≥ 4 + reviews ≥ 15”"
+    ]
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "From install to first lead in minutes",
+    "subtitle": "Three steps, no spreadsheets, no self-hosted server, no headaches.",
+    "steps": [
+      {
+        "title": "Connect the extension",
+        "text": "Generate a token in the dashboard and paste it into the Chrome extension. The connection validates instantly with your tenant, plan and credits — revocable at any time."
+      },
+      {
+        "title": "Draw your hunting area",
+        "text": "Pick the term (“barbershop”), the city, or draw the polygon on the map. The engine splits the region into cells and starts the grid at whatever speed mode you choose."
+      },
+      {
+        "title": "Watch leads arrive live",
+        "text": "The dashboard counter climbs in real time, animated. Qualify in the Kanban, fire WhatsApp campaigns and export whenever you want."
+      }
+    ]
+  },
+  "features": {
+    "eyebrow": "Differentiators",
+    "title": "What generic scrapers don't have",
+    "subtitle": "Every technical decision exists to solve a real prospecting pain.",
+    "items": [
+      {
+        "title": "Recursive Quadtree grid",
+        "text": "~3 km cells subdivided until the region is exhausted. Breaks the ~120-result ceiling with place_id and CID dedup, and every cell is persisted for resuming."
+      },
+      {
+        "title": "“No website” filter",
+        "text": "Missing website = HOT lead. Facebook, Instagram or linktr.ee = WARM. Own domain = COLD. Your funnel sorts by who needs you most."
+      },
+      {
+        "title": "4 speed modes",
+        "text": "From Stealth (~250 leads/h) to Turbo (~4,000/h), with log-normal delays, Bézier mouse with overshoot and reading pauses — never a robot's rhythm."
+      },
+      {
+        "title": "Anti-block circuit breaker",
+        "text": "CAPTCHA or 429? Exponential pause (30s → 2min → 8min → 30min), you get notified and it resumes one speed level slower. Never hammers Google."
+      },
+      {
+        "title": "Kanban + WhatsApp",
+        "text": "Waiting, Interested, Refused, Closed, In production. Realtime drag-and-drop, per-stage automation and variable-rich templates — from lead to close."
+      },
+      {
+        "title": "True multi-tenancy",
+        "text": "Your tenant, your data. Tokens with scopes and revocation, rate limiting per token and IP, LGPD/GDPR with data export and deletion."
+      }
+    ]
+  },
+  "comparison": {
+    "eyebrow": "Comparison",
+    "title": "Play Google Scraper vs. generic scrapers",
+    "subtitle": "The difference isn't the price. It's what's left in your pipeline at the end of the day.",
+    "thUs": "Play Google Scraper",
+    "thThem": "Generic scrapers",
+    "rows": [
+      {
+        "feature": "Result ceiling",
+        "us": "Recursive Quadtree — 1,200 to 4,000+",
+        "them": "Stops at ~120"
+      },
+      {
+        "feature": "“No website” filter",
+        "us": "Native, with heat_score 0–100",
+        "them": "Doesn't exist"
+      },
+      {
+        "feature": "Humanization",
+        "us": "Log-normal delays + Bézier + idle time",
+        "them": "Fixed delays or none"
+      },
+      {
+        "feature": "CAPTCHA and 429",
+        "us": "Circuit breaker with exponential backoff",
+        "them": "Freeze or crash"
+      },
+      {
+        "feature": "Connection drops",
+        "us": "Local IndexedDB queue + exact resume",
+        "them": "Lose the progress"
+      },
+      {
+        "feature": "Lead management",
+        "us": "Kanban + WhatsApp + activity timeline",
+        "them": "CSV and goodbye"
+      },
+      {
+        "feature": "Teams",
+        "us": "Multi-tenant with roles and permissions",
+        "them": "Single-user"
+      },
+      {
+        "feature": "Languages",
+        "us": "pt-BR, en-US and es-ES natively",
+        "them": "One language only"
+      }
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Plans",
+    "title": "Plans that grow with you",
+    "subtitle": "Pay for lead credits. No lock-in. Cancel anytime.",
+    "currencyLabel": "Currency",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "annualBadge": "2 months free",
+    "perMonth": "/mo",
+    "billedAnnually": "billed annually",
+    "popular": "Most popular",
+    "cta": "Start with {name}",
+    "creditsNote": "1 credit = 1 extracted lead. The trial starts with test credits.",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "For freelancers starting to prospect.",
+        "features": [
+          "2,000 lead credits/month",
+          "1 seat",
+          "1 concurrent search",
+          "Stealth and Moderate modes",
+          "CSV export",
+          "Kanban board",
+          "Email support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "For agencies and sales teams.",
+        "features": [
+          "8,000 lead credits/month",
+          "3 seats",
+          "Unlimited concurrent searches",
+          "All 4 speed modes",
+          "CSV and XLSX export",
+          "WhatsApp campaigns (5,000 msg/mo)",
+          "Webhooks and public API",
+          "Priority support"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "description": "For prospecting operations at scale.",
+        "features": [
+          "30,000 lead credits/month",
+          "10 seats",
+          "Dedicated ingestion queue",
+          "Turbo mode with priority",
+          "WhatsApp campaigns (25,000 msg/mo)",
+          "API with elevated limits",
+          "Assisted onboarding",
+          "Support SLA"
+        ]
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you need to know before firing up the engine.",
+    "items": [
+      {
+        "q": "Doesn't Google Maps really cap at ~120 results?",
+        "a": "It caps per query — no matter how much you scroll. So we split the region into ~3 km cells and scrape each one; any cell with 100+ results is split into 4, recursively. In practice, a capital city yields thousands of unique businesses, deduplicated by place_id and CID."
+      },
+      {
+        "q": "Is this allowed? What about LGPD/GDPR?",
+        "a": "We only collect public business data from Google Maps. The product ships with compliance controls: automatic opt-out in messages, per-tenant suppression lists, and export/deletion of your data. How you use it is your responsibility — our Terms make that explicit, and following LGPD/GDPR in commercial outreach is the prospector's obligation."
+      },
+      {
+        "q": "Do I need to keep my browser open?",
+        "a": "Yes — collection runs in your Chrome extension, in your real browser. That's exactly what makes it stable and low-profile: it's not an unknown headless server, it's your Chrome, your profile, your pace."
+      },
+      {
+        "q": "How many leads per hour can I get?",
+        "a": "It depends on the mode: Stealth ~250/h, Moderate ~700/h (default), Fast ~1,800/h and Turbo ~4,000/h. For new accounts we recommend starting on Moderate."
+      },
+      {
+        "q": "What if a CAPTCHA or block shows up?",
+        "a": "The circuit breaker pauses on its own (30s, 2min, 8min, 30min), notifies you in the panel and resumes one speed level below. We never insist against a block — insisting is what gets accounts burned."
+      },
+      {
+        "q": "My internet dropped mid-search. Did I lose everything?",
+        "a": "No. The queue lives in IndexedDB in the browser and every cell is persisted server-side. When you're back online, the search resumes exactly where it stopped."
+      },
+      {
+        "q": "How does the “no website” filter work?",
+        "a": "Every lead is classified server-side: no website = HOT; social-only presence (Facebook, Instagram, linktr.ee, wa.me) = WARM; own domain = COLD. The 0–100 heat_score cross-references that with rating, review count, phone and valid WhatsApp."
+      },
+      {
+        "q": "Can I cancel whenever I want?",
+        "a": "Any time, no lock-in. Credits from the current cycle stay available until it ends, and you can export everything to CSV/XLSX before leaving."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Your next client list is on the map.",
+    "subtitle": "Generate the token, install the extension and watch the counter climb live.",
+    "button": "Start for free",
+    "note": "No credit card · Cancel anytime"
+  },
+  "footer": {
+    "tagline": "Google Maps lead extraction with Quadtree, humanization and a pipeline all the way to the close.",
+    "productTitle": "Product",
+    "legalTitle": "Legal & privacy",
+    "lgpd": "We respect LGPD/GDPR: opt-out in every message, per-tenant suppression lists, and export or deletion of your data on request. Users are responsible for compliant use according to Google Maps rules and commercial contact legislation.",
+    "rights": "© {year} Play Google Scraper. All rights reserved.",
+    "disclaimer": "Not affiliated with Google. Google Maps is a trademark of Google LLC.",
+    "contentTitle": "Content"
+  },
+  "auth": {
+    "loginTitle": "Sign in to your account",
+    "loginSubtitle": "Access the Play Google Scraper panel",
+    "signupTitle": "Create your account",
+    "signupSubtitle": "Trial with 500 lead credits · no credit card",
+    "inviteTitle": "Accept invitation",
+    "inviteSubtitle": "Set your password to join {tenant}",
+    "nameLabel": "Your name",
+    "companyLabel": "Organization name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "confirmLabel": "Confirm password",
+    "passwordHint": "At least 8 characters, with letters and numbers",
+    "loginCta": "Sign in",
+    "signupCta": "Create account",
+    "inviteCta": "Set password and join",
+    "toSignup": "No account yet? Create one now",
+    "toLogin": "Already have an account? Sign in",
+    "working": "Processing…",
+    "errName": "Enter your name (2+ characters).",
+    "errCompany": "Enter the organization name (2+ characters).",
+    "errEmail": "Enter a valid email.",
+    "errPassword": "Password must be 8+ characters with letters and numbers.",
+    "errPasswordMismatch": "Passwords don't match.",
+    "welcome": "Welcome, {name}!",
+    "welcomeInvite": "Password set! Welcome aboard.",
+    "logoutToast": "Signed out.",
+    "inviteLoading": "Loading invitation…",
+    "inviteInvalid": "Invitation is invalid or expired. Ask for a new one.",
+    "inviteFor": "Invitation for {email}"
+  },
+  "workspace": {
+    "nav": {
+      "overview": "Overview",
+      "tokens": "Tokens & Connection",
+      "members": "Team",
+      "searches": "Searches",
+      "leads": "Leads",
+      "kanban": "Kanban",
+      "whatsapp": "WhatsApp",
+      "extension": "Extension",
+      "billing": "Plan & credits",
+      "audit": "Audit"
+    },
+    "openMenu": "Open navigation",
+    "backToSite": "View site",
+    "logout": "Sign out",
+    "creditsLabel": "Credits",
+    "planLabel": "Plan",
+    "planNames": {
+      "trial": "Trial",
+      "starter": "Starter",
+      "pro": "Pro",
+      "business": "Business"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Your operation, {name}.",
+      "cardCredits": "Credits remaining",
+      "creditsOf": "{remaining} of {total}",
+      "cardPlan": "Current plan",
+      "cardMembers": "Members",
+      "cardTokens": "Active tokens",
+      "checklistTitle": "First steps",
+      "step1": "Account created",
+      "step1Done": "Done",
+      "step2": "Generate an API token",
+      "step3": "Test the extension connection",
+      "step4": "Install the Chrome extension",
+      "goTokens": "Go to tokens",
+      "step4Note": "The extension will be available for download right here in the panel once the extraction engine ships (Phase 4 of the rollout).",
+      "accountTitle": "Your account",
+      "accountEmail": "Email",
+      "accountRole": "Role",
+      "accountSince": "Member since",
+      "orgTitle": "Organization",
+      "orgSlug": "Identifier",
+      "orgSeats": "Seats",
+      "orgCreated": "Created on",
+      "roles": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "member": "Member"
+      },
+      "loadError": "Could not load the dashboard. Try reloading.",
+      "cards": {
+        "leads": "Total leads",
+        "leads24h": "+{count} in the last 24h",
+        "hot": "Hot leads",
+        "tempShare": "{pct}% of the base",
+        "searches": "Active searches",
+        "searchesHint": "Queued, paused or running",
+        "credits": "Credits left",
+        "creditsHint": "{used} used of {limit}"
+      },
+      "charts": {
+        "byDay": "Leads per day (14 days)",
+        "temperature": "Base temperature",
+        "stages": "Pipeline by stage",
+        "strategy": "Extraction telemetry",
+        "topCategories": "Top categories",
+        "activeSearches": "Searches in progress"
+      },
+      "temp": {
+        "hot": "Hot",
+        "warm": "Warm",
+        "cold": "Cold"
+      },
+      "strategyPayload": "payload (primary)",
+      "strategyDom": "DOM (fallback)",
+      "strategyDetail": "detail (panel)",
+      "empty": "No data yet — turn the engine on and watch the counter climb.",
+      "noSearches": "No searches in progress.",
+      "creditsRemaining": "{remaining} left of {limit}",
+      "recentActivity": "Recent activity",
+      "seeAll": "See all",
+      "activityAuthRegister": "Account created",
+      "activityAuthLogin": "Login",
+      "activityTokenCreated": "Token created",
+      "activityTokenRevoked": "Token revoked",
+      "activityLeadsIngested": "Lead batch received",
+      "activityLeadsExported": "Leads exported",
+      "activityLeadStage": "Stage changed",
+      "activityLeadDeleted": "Lead deleted",
+      "activitySearchCreated": "Search created",
+      "activitySearchStarted": "Search started",
+      "activitySearchCompleted": "Search completed",
+      "activitySearchClaimed": "Search claimed by extension",
+      "activitySearchStatus": "Search status changed",
+      "activitySearchDeleted": "Search deleted",
+      "activityCampaignCreated": "Campaign created",
+      "activityCampaignStatus": "Campaign updated",
+      "activityCampaignProcessed": "Queue processed",
+      "activityCampaignReply": "WhatsApp reply",
+      "activityTemplateCreated": "Template created",
+      "activitySuppressionAdded": "Suppression added",
+      "activitySuppressionRemoved": "Suppression removed",
+      "activityWebhookCreated": "Webhook created",
+      "activityWebhookDeleted": "Webhook removed",
+      "activityBillingApplied": "Plan applied",
+      "activityMemberInvited": "Member invited",
+      "activityMemberDisabled": "Member disabled"
+    },
+    "navGroup": {
+      "operation": "Operations",
+      "growth": "Growth",
+      "system": "System"
+    }
+  },
+  "tokens": {
+    "title": "Tokens & Connection",
+    "subtitle": "Generate tokens to connect the Chrome extension to your tenant.",
+    "create": "New token",
+    "th": {
+      "name": "Name",
+      "token": "Token",
+      "scopes": "Scopes",
+      "status": "Status",
+      "lastUsed": "Last used",
+      "actions": "Actions"
+    },
+    "uses": "{count} uses",
+    "neverUsed": "Never used",
+    "status": {
+      "active": "Active",
+      "revoked": "Revoked"
+    },
+    "scopeDesc": {
+      "verify": "Validate connection (tenant, plan, credits)",
+      "leads:read": "Read leads from your tenant",
+      "leads:write": "Push leads collected by the extension"
+    },
+    "createTitle": "Create API token",
+    "createDesc": "The full token is shown exactly once, right after creation.",
+    "nameLabel": "Token name",
+    "namePlaceholder": "E.g.: Sales Chrome laptop",
+    "deviceLabel": "Device label (optional)",
+    "devicePlaceholder": "E.g.: Store notebook",
+    "scopesLabel": "Scopes",
+    "createCta": "Create token",
+    "revealTitle": "Copy your token now",
+    "revealWarning": "For security, this token will never be shown again.",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "curlTitle": "Terminal test",
+    "revoke": "Revoke",
+    "revokeTitle": "Revoke token?",
+    "revokeDesc": "\"{name}\" loses access immediately and this can't be undone.",
+    "revokeCta": "Revoke token",
+    "revokeToast": "Token revoked.",
+    "createToast": "Token created. Copy it now.",
+    "connectionTitle": "Test connection",
+    "connectionDesc": "Paste a token and validate the connection with your tenant (POST /api/v1/auth/verify).",
+    "connectionPlaceholder": "Paste the token here (pgs_live_…)",
+    "connectionCta": "Verify",
+    "connectionOk": "Connection validated",
+    "connectionFailed": "Connection failed",
+    "endpointLabel": "Extension connection endpoint",
+    "planLabel": "Plan",
+    "creditsLabel": "Credits",
+    "creditsRemaining": "{remaining} remaining of {limit}",
+    "empty": "No tokens yet. Create the first one to connect the extension.",
+    "webhooks": {
+      "title": "Outgoing webhooks",
+      "subtitle": "Receive signed events (HMAC-SHA256) in your CRM.",
+      "create": "New webhook",
+      "empty": "No webhooks. Events like lead.created can trigger your integrations.",
+      "active": "Active",
+      "inactive": "Inactive",
+      "deleteToast": "Webhook removed.",
+      "deleteAria": "Remove webhook",
+      "resend": "Resend pending",
+      "resendToast": "{count} deliveries reprocessed.",
+      "createTitle": "New webhook",
+      "createDesc": "The HMAC secret is shown once — use it to validate X-PGS-Signature.",
+      "urlLabel": "Target URL",
+      "eventsLabel": "Events",
+      "webhookEvent": {
+        "leadCreated": "Lead created",
+        "stageChanged": "Stage changed",
+        "searchCompleted": "Search completed",
+        "campaignReply": "WhatsApp reply"
+      },
+      "secretTitle": "Copy your secret now",
+      "secretWarning": "For security, this secret will not be shown again.",
+      "secretDone": "Got it",
+      "createToast": "Webhook created.",
+      "cancel": "Cancel",
+      "submit": "Create webhook"
+    }
+  },
+  "members": {
+    "title": "Team",
+    "subtitle": "{used} of {seats} seats in use.",
+    "invite": "Invite member",
+    "th": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "lastLogin": "Last sign-in",
+      "actions": "Actions"
+    },
+    "never": "Never",
+    "status": {
+      "active": "Active",
+      "invited": "Invite pending",
+      "disabled": "Disabled"
+    },
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "member": "Member"
+    },
+    "inviteTitle": "Invite to {org}",
+    "inviteDesc": "The invitation lasts 7 days and takes a seat once accepted.",
+    "inviteName": "Name (optional)",
+    "inviteRole": "Role",
+    "inviteCta": "Send invite",
+    "inviteSentTitle": "Invite created",
+    "inviteSentDesc": "Email sent via the \"{backend}\" backend. If it doesn't arrive, share this link:",
+    "inviteToast": "Invite created.",
+    "disable": "Disable",
+    "disableTitle": "Disable {name}?",
+    "disableDesc": "Access is revoked immediately. You can invite the person again later.",
+    "disableCta": "Disable",
+    "disableToast": "Member disabled.",
+    "you": "You",
+    "emailLabel": "Email"
+  },
+  "apiErrors": {
+    "email_taken": "Email already registered.",
+    "invalid_credentials": "Invalid email or password.",
+    "invite_pending": "Invite pending: set your password using the link you received.",
+    "account_disabled": "Account disabled. Contact the organization owner.",
+    "seats_exhausted": "Seat limit reached on the current plan.",
+    "invite_invalid": "Invitation is invalid or expired.",
+    "tenant_not_found": "Organization not found.",
+    "forbidden": "You don't have permission for this action.",
+    "rate_limited": "Too many attempts. Wait a few minutes.",
+    "validation_error": "Please review the provided data.",
+    "conflict": "Duplicate record.",
+    "not_found": "Record not found.",
+    "invalid_token": "Token is invalid or revoked.",
+    "missing_scope": "Token is missing the required scope.",
+    "internal_error": "Internal error. Please try again.",
+    "credits_exhausted": "Lead credits exhausted. Top up your plan to keep extracting.",
+    "billing_provider_unconfigured": "Payment provider not configured. Set STRIPE_SECRET_KEY or use manual activation.",
+    "billing_provider_error": "Payment provider communication failed. Try again.",
+    "invalid_json": "Malformed request.",
+    "bad_request": "Invalid request."
+  },
+  "searches": {
+    "title": "Searches",
+    "subtitle": "Planned areas for the Quadtree engine to collect from Google Maps.",
+    "create": {
+      "title": "New search",
+      "description": "The search joins the queue and is executed by the connected Chrome extension (claim), with exact per-cell resume.",
+      "term": "Search term",
+      "termPlaceholder": "e.g. barbershop, dental clinic…",
+      "centerLat": "Center latitude (optional)",
+      "centerLng": "Center longitude (optional)",
+      "radius": "Radius (km)",
+      "speedMode": "Speed mode",
+      "note": "Without a center, the extension uses the visible map area at claim time.",
+      "cancel": "Cancel",
+      "submit": "Queue it",
+      "toast": "Search queued. Claim it from the extension to run."
+    },
+    "empty": "No searches yet. Create one here and the extension takes over on your Chrome — or start directly from the extension's side panel.",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "delete": "Delete search",
+    "statusToast": "Status updated.",
+    "deleteToast": "Search deleted (leads are kept).",
+    "openDetailAria": "Open details for {term}",
+    "cellsProgress": "Cell progress",
+    "cellsCount": "cells",
+    "noCells": "No cells synced yet.",
+    "leadsFound": "{count} leads",
+    "maxDepth": "max depth {depth}",
+    "radius": "{km} km radius",
+    "speed": {
+      "stealth": "Stealth (~250/h)",
+      "moderate": "Moderate (~700/h)",
+      "fast": "Fast (~1.800/h)",
+      "turbo": "Turbo (~4.000/h)"
+    },
+    "cellCenter": "Cell (bbox)",
+    "cellDepth": "Depth",
+    "cellFound": "Found",
+    "cellStatus": "Status",
+    "createCta": "New search"
+  },
+  "leads": {
+    "title": "Leads",
+    "subtitle": "{count} leads in your tenant, sorted by sales potential.",
+    "export": "Export CSV",
+    "empty": "No leads with these filters. Adjust the search or run the engine.",
+    "noSite": "No site",
+    "filters": {
+      "q": "Search by name, phone, address…",
+      "stage": "Stage",
+      "allStages": "All stages",
+      "temperature": "Temperature",
+      "allTemps": "All",
+      "hasSite": "Website",
+      "anySite": "With or without site",
+      "noSite": "No site (hot)",
+      "withSite": "Has site",
+      "search": "Origin search",
+      "allSearches": "All searches",
+      "sort": "Sort"
+    },
+    "sort": {
+      "heat": "Heat score",
+      "recent": "Most recent",
+      "rating": "Rating",
+      "reviews": "Review count",
+      "name": "Name"
+    },
+    "temperature": {
+      "hot": "Hot",
+      "warm": "Warm",
+      "cold": "Cold"
+    },
+    "col": {
+      "name": "Name",
+      "phone": "Phone",
+      "site": "Website",
+      "temp": "Temp.",
+      "heat": "Heat",
+      "stage": "Stage",
+      "rating": "Rating",
+      "category": "Category"
+    },
+    "selectAll": "Select all leads on page",
+    "selectRow": "Select {name}",
+    "bulkSelected": "{count} selected",
+    "bulkToast": "{count} leads moved.",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageOf": "Page {page} of {total}",
+    "deleteTitle": "Delete lead?",
+    "deleteDescription": "\"{name}\" will be removed from your tenant (GDPR). This cannot be undone.",
+    "cancelDelete": "Keep",
+    "confirmDelete": "Delete lead",
+    "deleteToast": "Lead deleted.",
+    "detail": {
+      "phone": "Phone (E.164)",
+      "website": "Website",
+      "noWebsite": "No site — HOT",
+      "address": "Address",
+      "rating": "Rating",
+      "reviews": "reviews",
+      "coords": "Coordinates",
+      "strategy": "Strategy",
+      "heat": "Heat score",
+      "claimed": "Claimed",
+      "yes": "Yes",
+      "no": "No",
+      "search": "Origin search",
+      "lastSeen": "Last seen",
+      "categories": "Categories",
+      "sources": "Sources per strategy (fields)",
+      "stageLabel": "Pipeline stage",
+      "noteLabel": "Sales note",
+      "saveNote": "Save note",
+      "savedToast": "Lead updated.",
+      "delete": "Delete"
+    }
+  },
+  "kanban": {
+    "title": "Sales Kanban",
+    "subtitle": "Drag cards across pipeline stages. Optimistic UI, real data.",
+    "emptyColumn": "No leads in this stage.",
+    "keyboardHint": "Tip: hover (or focus) a card to move it across stages with the ◀ ▶ buttons — keyboard accessible.",
+    "dragAria": "Drag {name}",
+    "moveTo": "Move to {stage}",
+    "stages": {
+      "waiting": "Waiting",
+      "interested": "Interested",
+      "refused": "Refused",
+      "closed": "Closed",
+      "production": "In production"
+    }
+  },
+  "whatsapp": {
+    "subtitle": "Campaigns, variable templates and the suppression list (GDPR).",
+    "tabs": {
+      "campaigns": "Campaigns",
+      "templates": "Templates",
+      "suppression": "Suppression"
+    },
+    "campaigns": {
+      "create": {
+        "title": "New campaign",
+        "description": "The audience is queued with phone validation and the suppression list. Window, daily cap and random spacing protect your number.",
+        "name": "Campaign name",
+        "template": "Template",
+        "templatePlaceholder": "Pick an active template",
+        "noTemplates": "Create an active template before building the campaign.",
+        "mode": "Sending mode",
+        "ownNumberWarning": "Sending from your own number (WhatsApp Web/unofficial API) carries a real ban risk. Prefer the official Cloud API.",
+        "audienceStage": "Funnel stage",
+        "audienceTemp": "Temperature",
+        "audienceAll": "All",
+        "audienceHot": "Hot only",
+        "audienceWarm": "Warm only",
+        "audienceCold": "Cold only",
+        "minHeat": "Min heat",
+        "dailyLimit": "Daily cap",
+        "window": "Window (h)",
+        "startHour": "Start",
+        "endHour": "End",
+        "previewCta": "Count audience",
+        "previewResult": "{eligible} valid recipients out of {total} leads.",
+        "cancel": "Cancel",
+        "submit": "Create & queue",
+        "toast": "Campaign created with {count} recipients queued.",
+        "modeCloud": "Cloud API (official)",
+        "modeOwn": "Own number (risk)"
+      },
+      "empty": "No campaigns yet. Create a template and build your first audience.",
+      "modeCloud": "Cloud API",
+      "modeOwn": "Own number",
+      "queued": "{count} queued",
+      "sentCount": "{count} sent",
+      "failedCount": "{count} failed",
+      "optedCount": "{count} opt-out",
+      "pause": "Pause",
+      "start": "Start",
+      "tick": "Process queue",
+      "cancel": "Cancel",
+      "statusToast": "Campaign updated.",
+      "tickToast": "Processed: {sent} sent, {ready} ready.",
+      "tickWindow": "Outside the time window — sending resumes in the configured window.",
+      "tickDailyLimit": "Daily limit reached — the queue resumes tomorrow.",
+      "createCta": "New campaign"
+    },
+    "templates": {
+      "create": "New template",
+      "empty": "No templates. Create the first one with the variables below.",
+      "inactive": "Inactive",
+      "edit": "Edit",
+      "deleteToast": "Template deleted.",
+      "variationsCount": "{count} anti-spam variation(s)",
+      "dialog": {
+        "title": "New template",
+        "editTitle": "Edit template",
+        "description": "Use variables to personalize: '{{nome}}', '{{categoria}}', '{{cidade}}', '{{rating}}'. Variations rotate to reduce blocks.",
+        "name": "Name",
+        "locale": "Language",
+        "body": "Message",
+        "variablesHint": "Variables: '{{nome}}', '{{categoria}}', '{{cidade}}', '{{rating}}'",
+        "variations": "Variations (one per line)",
+        "variationsPlaceholder": "Hi '{{nome}}'! Saw your '{{categoria}}'…",
+        "preview": "Preview with sample data",
+        "active": "Active",
+        "cancel": "Cancel",
+        "submit": "Save template",
+        "toast": "Template saved."
+      }
+    },
+    "suppression": {
+      "description": "Phones on this list never receive campaigns. Reply-based opt-out (\"stop\", \"remove\") lands here automatically (LGPD/GDPR).",
+      "phoneLabel": "Phone (E.164)",
+      "add": "Add",
+      "addToast": "Phone suppressed.",
+      "removeToast": "Removed from list.",
+      "removeAria": "Remove {phone} from suppression",
+      "empty": "Empty list — no suppressed phones."
+    }
+  },
+  "extension": {
+    "title": "Chrome Extension",
+    "subtitle": "The extraction engine runs on YOUR Chrome — download, install and connect to your tenant.",
+    "downloadCard": "Download the extension package (MV3)",
+    "downloadDesc": "The zip ships with your API URL baked in. Unzip and load it as an unpacked extension.",
+    "downloadCta": "Download extension (.zip)",
+    "downloadToast": "Download started. Follow the 3 steps below.",
+    "steps": {
+      "install": "Open Chrome",
+      "installText": "Paste the address below and enable \"Developer mode\" in the top-right corner.",
+      "load": "Load the extension",
+      "loadText": "Click \"Load unpacked\" and pick the unzipped folder.",
+      "connect": "Connect your tenant",
+      "connectText": "Open the extension side panel (Play Google Scraper icon), paste a pgs_live_ token created in the Tokens tab and click Connect. Or create the token and download the package again for automatic connection."
+    },
+    "connectionCard": "Connection status",
+    "noTokens": "No active tokens. Create one in the Tokens & Connection tab.",
+    "connectionHint": "Real usage of your tokens — every extension check shows up here:",
+    "lastUsed": "used {when} ({count}×)",
+    "neverUsed": "never used",
+    "lgpdNote": "The extension collects only public business data from Google Maps, at the configured humanized pace, and sends it to your tenant through the token-authenticated API (TLS). No personal browsing data is collected."
+  },
+  "billing": {
+    "title": "Plan & credits",
+    "subtitle": "1 credit = 1 extracted lead. Upgrade and top up as you grow.",
+    "manualCta": "Manual activation",
+    "currentPlan": "Current plan",
+    "seats": "{count} seats",
+    "providerUnconfigured": "Online checkout goes live as soon as the payment provider is configured (STRIPE_SECRET_KEY). Meanwhile the owner can use manual activation.",
+    "credits": "Credits left",
+    "creditsUsed": "{used} used of {limit} this cycle",
+    "events": "Billing events",
+    "noEvents": "No events yet.",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "price": "R$ {value}",
+    "perMonth": "/month",
+    "planCredits": "{credits} credits/month · {seats} seat(s)",
+    "checkout": "Subscribe",
+    "currentBadge": "Current plan",
+    "manual": {
+      "title": "Manual activation",
+      "description": "Sales-assisted deals: apply plan, credits and seats directly (audited as a billing event).",
+      "plan": "Plan",
+      "credits": "Credits",
+      "seats": "Seats",
+      "note": "Note (optional)",
+      "cancel": "Cancel",
+      "submit": "Apply",
+      "toast": "Plan applied successfully."
+    }
+  },
+  "audit": {
+    "title": "Audit",
+    "subtitle": "{count} events recorded (append-only).",
+    "empty": "No events yet.",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} of {total}",
+    "lgpdNote": "The trail records action, actor and business context — never personal contact data in plain text."
+  },
+  "content": {
+    "blogTitle": "Blog: definitive Google Maps prospecting guides",
+    "blogH1": "Definitive guides to Google Maps prospecting",
+    "blogBluf": "Bottom line up front: these are the six technical and commercial pillars of modern Google Maps prospecting — from the extraction method to WhatsApp — written by the team that builds the Play Google Scraper engine, with real product numbers.",
+    "blogSubtitle": "Extraction methods, the 120-result ceiling, heat score, LGPD/GDPR, anti-bot and WhatsApp — with real engine numbers.",
+    "blogReadingTime": "{minutes} min read",
+    "blogUpdated": "Updated on {date}",
+    "blogPublished": "Published on {date}",
+    "blogReadMore": "Read the full guide",
+    "blogBack": "← All articles",
+    "blogTakeaways": "Key takeaways",
+    "blogBlufLabel": "Bottom line up front",
+    "blogSummary": "Executive summary",
+    "blogSources": "Sources and references",
+    "blogGlossary": "Related terms",
+    "blogFaq": "Frequently asked questions",
+    "blogLangNotice": "This article is available in Portuguese (pt-BR).",
+    "blogCtaTitle": "Put this pipeline to work today",
+    "blogCtaText": "Chrome extension, quadtree grid, heat score and Kanban — free trial with 500 credits.",
+    "blogCtaButton": "Start free",
+    "glossaryTitle": "Glossary: Google Maps prospecting technical terms",
+    "glossaryH1": "Technical glossary — prospecting, extraction and sales automation",
+    "glossaryBluf": "Bottom line up front: short, quotable definitions of the core terms in lead extraction, Google Maps ranking, anti-blocking automation and GDPR/LGPD compliance — the reference generative engines can cite.",
+    "glossarySubtitle": "{count} terms defined directly and quotably.",
+    "glossaryRelated": "Related terms",
+    "glossaryDeepen": "Dig deeper",
+    "glossaryOnThisPage": "On this page",
+    "aboutH1": "About Play Google Scraper",
+    "aboutBluf": "Bottom line up front: Play Google Scraper is a Brazilian B2B prospecting platform that turns Google Maps into a prioritized work queue — real-browser extraction, digital-presence scoring and a compliant outreach pipeline (LGPD/GDPR).",
+    "aboutMissionTitle": "Our mission",
+    "aboutMissionText": "Give small sales teams the prospecting power that used to belong only to large data operations: full regional coverage, smart prioritization and human contact at the right moment — without depending on bought, outdated lists.",
+    "aboutHowTitle": "How we make money (transparency)",
+    "aboutHowText": "We are 100% subscription: monthly/annual plans in BRL that include extraction credits and seats. We do not sell lead lists, do not resell data and do not monetize our customers' data — your tenant's leads are yours, with export and deletion available.",
+    "aboutEngineeringTitle": "How we build (technical authority)",
+    "aboutEngineeringList": [
+      "Payload→DOM→detail cascade extraction engine with per-field type validation and per-strategy telemetry — decisions documented in public ADRs.",
+      "Quadtree grid search (~3 km cells, depth 4) that beats the ~120-result ceiling of a single Google Maps query.",
+      "Log-normal humanization (Box-Muller) and exponential circuit breaker — long-running operations without a blocking spiral.",
+      "Multi-tenant isolation proven by a per-table verification suite (tenant_id on 100% of business tables).",
+      "Idempotent API v1 (Idempotency-Key) with pgs_live_ tokens (SHA-256, scopes, revocation) and HMAC-SHA256 signed webhooks."
+    ],
+    "aboutTrustTitle": "Security and privacy (trust)",
+    "aboutTrustList": [
+      "API tokens shown once; only SHA-256 stored server-side; immediate revocation and last-use tracking.",
+      "Keyword-based opt-out on WhatsApp replies with per-tenant permanent suppression, enforced server-side before every send.",
+      "CSV export and lead deletion available in the UI — data subject rights (art. 18 LGPD) operational, not promises.",
+      "Audit trail of every lead and member operation, with a dedicated panel page.",
+      "Security headers (HSTS, CSP, anti-clickjacking) applied on all public pages."
+    ],
+    "aboutWhoTitle": "Who it is for",
+    "aboutWhoText": "Digital agencies, web designers, consultancies, real estate agencies, clinics, gyms and sales teams prospecting local businesses. Not for extracting sensitive data or any use without a legal basis under data protection law.",
+    "aboutContactTitle": "Contact",
+    "aboutContactText": "Support and privacy channel inside the panel (owner/admin team) and via institutional email. Response within 1 business day.",
+    "aboutCta": "See plans and pricing",
+    "footerNote": "Product guide: {link}",
+    "quickTitle": "Quick summary: what is Play Google Scraper?",
+    "quickSubtitle": "Direct answers to who this product is for and what it does.",
+    "quickItems": [
+      {
+        "q": "What is Play Google Scraper?",
+        "a": "A multi-tenant SaaS platform with a Chrome extension (Manifest V3) that extracts leads from Google Maps — name, phone, website, rating, reviews, address and categories — and turns them into a sales funnel with Kanban and WhatsApp."
+      },
+      {
+        "q": "How does it get more than ~120 results per search?",
+        "a": "Through quadtree grid search: the region is split into ~3 km cells searched one by one; when a cell hits the limit it is subdivided into four (up to depth 4), covering 100% of the area instead of a truncated sample."
+      },
+      {
+        "q": "What is the heat score and what is it for?",
+        "a": "A 0–100 score computed on the server that prioritizes leads by digital presence: businesses without a website are the hottest (+35), followed by social-only pages (+18), plus rating, reviews, phone, WhatsApp and category signals."
+      },
+      {
+        "q": "How does messaging comply with privacy law (LGPD)?",
+        "a": "Every WhatsApp campaign has keyword opt-out ('stop') with permanent per-tenant suppression enforced server-side before each send, time windows, daily limits and number warm-up — plus a complete audit trail."
+      }
+    ]
+  }
+}

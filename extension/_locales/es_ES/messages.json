@@ -1,0 +1,23 @@
+{
+  "extName": {
+    "message": "Play Google Scraper",
+    "description": "Nombre de la extensión"
+  },
+  "extDesc": {
+    "message": "Extrae leads de Google Maps y los envía al panel Play Google Scraper mediante token de API.",
+    "description": "Descripción de la extensión"
+  },
+  "connect": { "message": "Conectar" },
+  "tokenLabel": { "message": "Token de API" },
+  "startSearch": { "message": "Iniciar búsqueda" },
+  "stopSearch": { "message": "Detener" },
+  "pause": { "message": "Pausar" },
+  "resume": { "message": "Reanudar" },
+  "cells": { "message": "Celdas" },
+  "leads": { "message": "Leads" },
+  "credits": { "message": "Créditos" },
+  "queuePending": { "message": "Lotes en cola local" },
+  "eta": { "message": "ETA" },
+  "circuitBreaker": { "message": "Circuit breaker" },
+  "rateLimits": { "message": "Límites de tasa" }
+}
