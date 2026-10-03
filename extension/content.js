@@ -134,10 +134,11 @@
     const match = location.pathname.match(/^\/maps\/search\/([^/]+)(?:\/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?))?/);
     if (!match) return null;
     let term = null;
+    const rawTerm = match[1].replace(/\+/g, " "); // o Maps reescreve %20 como "+"
     try {
-      term = decodeURIComponent(match[1]);
+      term = decodeURIComponent(rawTerm);
     } catch (_) {
-      term = match[1];
+      term = rawTerm;
     }
     return {
       term: term,
@@ -146,9 +147,13 @@
     };
   }
 
+  function normTerm(value) {
+    return String(value || "").normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
   function needsNavigation(term, cellCenter) {
     const cur = currentSearchInfo();
-    if (!cur || cur.term !== term) return true;
+    if (!cur || normTerm(cur.term) !== normTerm(term)) return true;
     if (cur.lat === null || cur.lng === null) return true;
     return (
       Math.abs(cur.lat - cellCenter.lat) > 0.02 || Math.abs(cur.lng - cellCenter.lng) > 0.02
@@ -399,6 +404,7 @@
     const byId = new Map();
     const order = [];
     const unknownCoords = { count: 0 };
+    let dropped = 0;
 
     const put = (entry) => {
       if (!entry || !entry.place_id) return;
@@ -428,14 +434,17 @@
       const lat = lead.fields.lat;
       const lng = lead.fields.lng;
       if (typeof lat === "number" && typeof lng === "number") {
-        if (!inBbox(lat, lng, cell)) continue; // vazamento da célula — descarta (lição gosom)
+        if (!inBbox(lat, lng, cell)) {
+          dropped += 1;
+          continue; // vazamento da célula — descarta (lição gosom)
+        }
       } else {
         unknownCoords.count += 1; // sem coords → mantém (servidor aceita null)
       }
       if (!lead.fields.name || String(lead.fields.name).trim().length === 0) continue;
       leads.push(lead);
     }
-    return { leads: leads, unknownCoords: unknownCoords.count };
+    return { leads: leads, unknownCoords: unknownCoords.count, dropped: dropped };
   }
 
   /* ─────────────────────────── scroll humanizado ─────────────────────────── */
@@ -535,7 +544,7 @@
    * @param {number} reloadAttempt
    * @returns {Promise<object|null>} resultado da célula ou null se navegou
    */
-  async function scrapeTask(cell, term, speedMode, reloadAttempt) {
+  async function scrapeTask(cell, term, speedMode, reloadAttempt, alreadyNavigated) {
     workingCellExtId = cell.extId;
     const center = {
       lat: (cell.latMin + cell.latMax) / 2,
@@ -555,8 +564,8 @@
     }
 
     // (a) navegação — a aba do Maps é controlada por nós
-    if (needsNavigation(term, center)) {
-      await savePending(cell, term, speedMode, reloadAttempt);
+    if (!alreadyNavigated && needsNavigation(term, center)) {
+      await savePending(cell, term, speedMode, reloadAttempt, true);
       location.href = buildSearchUrl(term, center.lat, center.lng);
       return null; // instância morre; a nova retoma via PGS_GET_PENDING
     }
@@ -575,7 +584,7 @@
       };
     }
     if (feedState === "timeout" && reloadAttempt < 1) {
-      await savePending(cell, term, speedMode, reloadAttempt + 1);
+      await savePending(cell, term, speedMode, reloadAttempt + 1, true);
       location.reload();
       return null;
     }
@@ -664,6 +673,20 @@
       };
     }
 
+    if (leadsOut.length === 0 && merged.dropped > 0) {
+      return {
+        cellExtId: cell.extId,
+        leads: [],
+        resultCount: 0,
+        strategyCounts: strategyCounts,
+        captchaDetected: false,
+        endReached: endReached,
+        lastError:
+          "fora_da_regiao: " + merged.dropped + " resultados do Google estão fora da área escolhida (centro " +
+          center.lat.toFixed(4) + ", " + center.lng.toFixed(4) + ").",
+      };
+    }
+
     if (merged.unknownCoords > 0 && feedEl) {
       // telemetria — logs ficam no sw (console do sw é o que importa em MV3)
       console.info("[PGS] leads sem coords mantidos:", merged.unknownCoords);
@@ -682,11 +705,11 @@
 
   /* ─────────────────────── pendência / retomada (crash-safe) ─────────────────────── */
 
-  async function savePending(cell, term, speedMode, reloadAttempt) {
+  async function savePending(cell, term, speedMode, reloadAttempt, navigated) {
     try {
       const p = chrome.runtime.sendMessage({
         type: "PGS_SAVE_PENDING",
-        pending: { cell: cell, term: term, speedMode: speedMode, reloadAttempt: reloadAttempt || 0 },
+        pending: { cell: cell, term: term, speedMode: speedMode, reloadAttempt: reloadAttempt || 0, navigated: Boolean(navigated) },
       });
       if (p && typeof p.catch === "function") p.catch(() => {});
     } catch (_) {
@@ -706,7 +729,8 @@
         pending.cell,
         pending.term,
         pending.speedMode || "moderate",
-        pending.reloadAttempt || 0
+        pending.reloadAttempt || 0,
+        Boolean(pending.navigated)
       );
       stopPing();
       workingCellExtId = null;

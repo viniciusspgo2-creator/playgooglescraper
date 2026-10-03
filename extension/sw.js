@@ -607,6 +607,33 @@ async function processCellResult(cell, result) {
     return;
   }
 
+  if (result.lastError) {
+    if (/^fora_da_regiao/.test(result.lastError)) {
+      cell.status = "failed";
+      cell.lastError = String(result.lastError).slice(0, 300);
+      pushError(
+        result.lastError +
+          " Confira o SINAL das coordenadas (Brasil = latitude e longitude negativas, ex.: -16.6869 / -49.2648) e inicie a busca de novo."
+      );
+      scheduleSync([cell]);
+      await markSearchFinished("failed");
+      return;
+    }
+    if (cell.attempts < 3) {
+      cell.status = "pending";
+      pushLog("Célula com erro (" + result.lastError + ") — tentativa " + cell.attempts + "/3, reenfileirada.");
+      scheduleSync([cell]);
+      await saveState();
+      return;
+    }
+    cell.status = "failed";
+    cell.lastError = String(result.lastError).slice(0, 300);
+    pushError("Célula falhou 3×: " + result.lastError);
+    scheduleSync([cell]);
+    await saveState();
+    return;
+  }
+
   const found = result.resultCount || 0;
   cell.found = found;
   S.strategyCounts.payload += (result.strategyCounts && result.strategyCounts.payload) || 0;
