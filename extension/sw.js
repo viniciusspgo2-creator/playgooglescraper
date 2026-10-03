@@ -826,6 +826,9 @@ async function handleStartSearch(msg) {
   const speedMode = PGS.humanizer.PROFILES[msg.speedMode] ? msg.speedMode : "moderate";
   const maxDepth = Math.min(Math.max(Number(msg.maxDepth) || 4, 1), 6);
   if (!term) return { ok: false, error: { code: "validation", message: "Informe o termo de busca (ex.: dentistas)." } };
+  if (Math.abs(centerLat) < 1 && Math.abs(centerLng) < 1) {
+    return { ok: false, error: { code: "validation", message: "Centro 0,0 fica no oceano (Golfo da Guiné). Informe a latitude/longitude da sua cidade (ex.: Goiânia = -16.6869 / -49.2648; no Brasil ambos são negativos)." } };
+  }
   if (!isFinite(centerLat) || centerLat < -90 || centerLat > 90 || !isFinite(centerLng) || centerLng < -180 || centerLng > 180) {
     return { ok: false, error: { code: "validation", message: "Centro inválido — informe latitude/longitude (ou use o centro da aba atual)." } };
   }

@@ -269,8 +269,15 @@
     try {
       const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
       for (const tab of tabs) {
-        const match = /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/.exec(tab.url || "");
+        const match = /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,(\d+(?:\.\d+)?)z)?/.exec(tab.url || "");
         if (match) {
+          const lat = Number(match[1]);
+          const lng = Number(match[2]);
+          const zoom = match[3] ? Number(match[3]) : null;
+          if ((Math.abs(lat) < 1 && Math.abs(lng) < 1) || (zoom !== null && zoom < 9)) {
+            showError(els.searchError, "O mapa está afastado/sem localização (centro " + lat + ", " + lng + "). Pesquise sua cidade no Google Maps, aproxime o mapa nela e clique de novo.");
+            return;
+          }
           els.centerLat.value = match[1];
           els.centerLng.value = match[2];
           showError(els.searchError, "");
